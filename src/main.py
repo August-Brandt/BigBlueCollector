@@ -2,10 +2,14 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-url = "https://www.dba.dk/computer-og-spillekonsoller/hardware-og-software/grafikkort/"
+url = "https://www.dba.dk/computer-og-spillekonsoller/hardware-og-software/grafikkort/side-1"
 response = requests.get(url)
 
 soup = BeautifulSoup(response.content, 'html.parser')
+
+# Find the number of pages
+pagination = soup.find('div', {"class": "pagination"})
+pages = int(pagination.find_all('li')[-2].find('a').string) # Get the number of the last pagination link
 
 # print(soup.prettify())
 print("-"*45)
