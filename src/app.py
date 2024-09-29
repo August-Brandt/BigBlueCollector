@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, make_response
 from markupsafe import escape
+import scraper
 import json
 
 app = Flask(__name__)
@@ -8,16 +9,16 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.post('/fetch')
-def postFetch():
-    url = request.form['url']
-    response = make_response(redirect(url_for("results")))
-    response.set_cookie('url', url)
-    return response
-
-@app.route('/results')
+@app.post('/results')
 def results():
-    url = request.cookies.get('url')
-    return render_template("result.html", dbaurl=escape(url))
+    url = request.form['url']
+    data = fetchData(url)
+    return render_template("result.html", 
+                           dbaurl=escape(url),
+                           numPages=data['numberOfPages'], 
+                           listings=data['listings'])
+
+def fetchData(url):
+    return scraper.scrapeUrl(url)
 
 app.run(host="0.0.0.0", port=8080)

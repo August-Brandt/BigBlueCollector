@@ -3,7 +3,18 @@
     <title>Fetch results</title>
 </head>
 <body>
-    <h1>Results of fetch from url</h1>
-    <p>URL: <a href={{dbaurl}}>{{dbaurl}}</p>
+    <div>
+        <h1>Results of fetch from url</h1>
+        <p>URL: <a href={{dbaurl}}>{{dbaurl}}</a></p>
+    </div>
+    <hr>
+    <div>
+        <p><strong>Number of pages found: {{numPages}}</strong></p>
+        <ul>
+            {% for listing in listings %}
+                <li><p><strong>Listing: </strong>{{listing[0]}}</p><p><strong>Price: </strong>{{listing[1]}}</p></li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>
