@@ -29,3 +29,9 @@ def GetListings(soup):
         listings.append((text, price))
     
     return listings
+
+def GetHtmlFile(url):
+    response = requests.get(url)
+        
+    with open('test.html', "wb") as f:
+        f.write(response.content)

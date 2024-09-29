@@ -19,13 +19,21 @@ with open(args[1], "r") as f:
                 quit()
 
 print("Getting listing from: " + url + " ...")
-
+# Append page number to url
+if url[-6:] != "side-1":
+    url += "/side-1"
+utils.GetHtmlFile(url)
 pages = utils.GetNumberPages(url)
 print("Pages:", pages)
 
 listings = utils.GetAllListings(url, pages)
 
 print("Total listings:", len(listings))
+
+""" print("-"*45)
+for listing in listings:
+    print(f"Listing: {listing[0]}\n\tPrice: {listing[1]} kr")
+    print("-"*45) """
 
 
 print("-"*45)
@@ -35,6 +43,5 @@ for listing in listings:
             print(listing[0])
             print("\t" + listing[1])
             print("-"*45)
+            break
 
-# with open('test.html', "wb") as f:
-#     f.write(response.content)
