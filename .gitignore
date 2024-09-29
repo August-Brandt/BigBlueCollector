@@ -1,5 +1,5 @@
 # Custom ignores
-*.html
+/*.html
 def.txt
 
 # vscode ignores
