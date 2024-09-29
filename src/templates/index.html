@@ -1,17 +1,30 @@
 <html>
 <head>
     <title>Big Blue Collector</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
 </head>
 <body>
-    <h1>Welcome to Big Blue Collector</h1>
-    <form action="/results" method="POST">
-        <div>
-            <label for="dbaurl">URL:</label><br>
-            <input type="text" id="dbaurl", name="url" size="70">
-        </div>
-        <div>
-            <input type="submit" value="Fetch">
-        </div>
-    </form>
+    <script type="text/javascript">
+        function loading() {
+            document.getElementById("content").style.display = "none";
+            document.getElementById("loading").style.display = "block";
+        }
+    </script>
+    <div id="loading">
+        <h1 id="loading-header">Loading...</h1>
+        <div class="loader"></div>
+    </div>
+    <div id="content">
+        <h1 class="page-title">Welcome to Big Blue Collector</h1>
+        <form action="/results" method="POST">
+            <div>
+                <label for="dbaurl">URL:</label><br>
+                <input type="text" id="dbaurl", name="url" size="70">
+            </div>
+            <div>
+                <input type="submit" id="submit" value="Submit" onclick="loading();">
+            </div>
+        </form>
+    </div>
 </body>
 </html>

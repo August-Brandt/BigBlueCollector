@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for, make_response
+from flask import Flask, render_template, request
 from markupsafe import escape
 import scraper
-import json
 
 app = Flask(__name__)
 
@@ -16,7 +15,8 @@ def results():
     return render_template("result.html", 
                            dbaurl=escape(url),
                            numPages=data['numberOfPages'], 
-                           listings=data['listings'])
+                           listings=data['listings'],
+                           numListings=len(data['listings']))
 
 def fetchData(url):
     return scraper.scrapeUrl(url)

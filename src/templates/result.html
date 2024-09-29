@@ -1,18 +1,20 @@
 <html>
 <head>
     <title>Fetch results</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
 </head>
 <body>
     <div>
-        <h1>Results of fetch from url</h1>
-        <p>URL: <a href={{dbaurl}}>{{dbaurl}}</a></p>
+        <h1 class="page-title">Results of fetch from url</h1>
+        <p id="fetch-url">URL: <a href={{dbaurl}}>{{dbaurl}}</a></p>
     </div>
     <hr>
     <div>
-        <p><strong>Number of pages found: {{numPages}}</strong></p>
+        <p id="num-pages"><strong>Number of pages found: {{numPages}}</strong></p>
+        <p id="num-listings">Number of listings found: {{numListings}}</p>
         <ul>
             {% for listing in listings %}
-                <li><p><strong>Listing: </strong>{{listing[0]}}</p><p><strong>Price: </strong>{{listing[1]}}</p></li>
+                <li class="listing"><p class="listing-title"><strong>Listing: </strong>{{listing[0]}}</p><p class="listing-price"><strong>Price: </strong>{{listing[1]}}</p></li>
             {% endfor %}
         </ul>
     </div>
