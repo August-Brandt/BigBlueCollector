@@ -3,6 +3,7 @@ import sys
 
 
 def scrapeUrl(url: str, keywords: list[str]=None):
+    # TODO: add threading to speed up fetching data
     # Append page number to url
     if url[-6:] != "side-1":
         url += "/side-1"

@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 from markupsafe import escape
 import scraper
 
+# TODO: add error handling 
+
 app = Flask(__name__)
 
 @app.route('/')
