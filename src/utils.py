@@ -28,8 +28,9 @@ def GetAllListings(startUrl, numberOfPages):
     print("Total fetch time:", endtime - starttime)
     return listings
 
-def GetListings(baseurl, pagenum, listings, lock):
-    print("Fetching page", pagenum)
+def GetListings(baseurl, pagenum, listings, lock, withprint=False):
+    if withprint:
+        print("Fetching page", pagenum)
     response = requests.get(baseurl[:-1] + str(pagenum))
     soup = BeautifulSoup(response.content, 'html.parser')
     listingsBuffer = []
@@ -42,7 +43,8 @@ def GetListings(baseurl, pagenum, listings, lock):
     lock.acquire()
     listings.extend(listingsBuffer)
     lock.release()
-    print("Finished fetching page", pagenum)
+    if withprint:
+        print("Finished fetching page", pagenum)
 
 def GetHtmlFile(url):
     response = requests.get(url)
