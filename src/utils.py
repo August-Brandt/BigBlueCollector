@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import threading
 
 
 def GetNumberPages(url):
@@ -12,23 +13,31 @@ def GetNumberPages(url):
 
 def GetAllListings(startUrl, numberOfPages):
     listings = []
+    lock = threading.Lock()
+    threads = []
     for i in range(1, numberOfPages + 1):
-        response = requests.get(startUrl[:-1] + str(i))
-        soup = BeautifulSoup(response.content, 'html.parser')
-        print(f"\rFetching page {i} ...", end='')
-        listings.extend(GetListings(soup))
-    print()
+        thread = threading.Thread(target=GetListings, args=(startUrl, i, listings, lock))
+        thread.start()
+        threads.append(thread)
+
+    for thread in threads:
+        thread.join()
+
     return listings
 
-def GetListings(soup):
-    listings = []
+def GetListings(baseurl, pagenum, listings, lock):
+    response = requests.get(baseurl[:-1] + str(pagenum))
+    soup = BeautifulSoup(response.content, 'html.parser')
+    listingsBuffer = []
     for listing in soup.find_all('tr', {"class": re.compile("^dbaListing")}):
         link = listing.find('a', {"class": "listingLink"})
         text = link.find('span', {"class": "text"}).string
         price = link.find('span', {"class": "price"}).string
-        listings.append((text, price))
+        listingsBuffer.append((text, price))
     
-    return listings
+    lock.acquire()
+    listings.extend(listingsBuffer)
+    lock.release()
 
 def GetHtmlFile(url):
     response = requests.get(url)
