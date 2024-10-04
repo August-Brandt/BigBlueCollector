@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-
+import time
 
 def GetNumberPages(url):
     response = requests.get(url)
@@ -12,12 +12,15 @@ def GetNumberPages(url):
 
 def GetAllListings(startUrl, numberOfPages):
     listings = []
+    starttime = time.time()
     for i in range(1, numberOfPages + 1):
         response = requests.get(startUrl[:-1] + str(i))
         soup = BeautifulSoup(response.content, 'html.parser')
         print(f"\rFetching page {i} ...", end='')
         listings.extend(GetListings(soup))
     print()
+    endtime = time.time()
+    print("total fetch time:", endtime - starttime)
     return listings
 
 def GetListings(soup):
@@ -27,7 +30,6 @@ def GetListings(soup):
         text = link.find('span', {"class": "text"}).string
         price = link.find('span', {"class": "price"}).string
         listings.append((text, price))
-    
     return listings
 
 def GetHtmlFile(url):
