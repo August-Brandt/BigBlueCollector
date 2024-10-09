@@ -1,7 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import threading
 import time
+
 
 def GetNumberPages(url):
     response = requests.get(url)
@@ -12,25 +14,37 @@ def GetNumberPages(url):
 
 def GetAllListings(startUrl, numberOfPages):
     listings = []
+    lock = threading.Lock()
+    threads = []
     starttime = time.time()
     for i in range(1, numberOfPages + 1):
-        response = requests.get(startUrl[:-1] + str(i))
-        soup = BeautifulSoup(response.content, 'html.parser')
-        print(f"\rFetching page {i} ...", end='')
-        listings.extend(GetListings(soup))
-    print()
+        thread = threading.Thread(target=GetListings, args=(startUrl, i, listings, lock))
+        thread.start()
+        threads.append(thread)
+
+    for thread in threads:
+        thread.join()
     endtime = time.time()
-    print("total fetch time:", endtime - starttime)
+    print("Total fetch time:", endtime - starttime)
     return listings
 
-def GetListings(soup):
-    listings = []
+def GetListings(baseurl, pagenum, listings, lock, withprint=False):
+    if withprint:
+        print("Fetching page", pagenum)
+    response = requests.get(baseurl[:-1] + str(pagenum))
+    soup = BeautifulSoup(response.content, 'html.parser')
+    listingsBuffer = []
     for listing in soup.find_all('tr', {"class": re.compile("^dbaListing")}):
         link = listing.find('a', {"class": "listingLink"})
         text = link.find('span', {"class": "text"}).string
         price = link.find('span', {"class": "price"}).string
-        listings.append((text, price))
-    return listings
+        listingsBuffer.append((text, price))
+
+    lock.acquire()
+    listings.extend(listingsBuffer)
+    lock.release()
+    if withprint:
+        print("Finished fetching page", pagenum)
 
 def GetHtmlFile(url):
     response = requests.get(url)
