@@ -1,15 +1,9 @@
 <html>
 <head>
     <title>Big Blue Collector</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
 </head>
 <body>
-    <script type="text/javascript">
-        function loading() {
-            document.getElementById("content").style.display = "none";
-            document.getElementById("loading").style.display = "block";
-        }
-    </script>
     <div id="loading">
         <h1 id="loading-header">Loading...</h1>
         <div class="loader"></div>
@@ -17,14 +11,27 @@
     <div id="content">
         <h1 class="page-title">Welcome to Big Blue Collector</h1>
         <form action="/results" method="POST">
-            <div>
+            <div class="form-input">
                 <label for="dbaurl">URL:</label><br>
                 <input type="text" id="dbaurl", name="url" size="70">
             </div>
-            <div>
+            <div class="form-button">
                 <input type="submit" id="submit" value="Submit" onclick="loading();">
             </div>
         </form>
+        <form id="keyword-form" action="/">
+            <label for="title-keyword">Add keyword:</label><br>
+            <input type="type" id="title-keyword" name="keyword">
+            <input type="submit" id="submit" value="Add">
+        </form>
+        <h3>Keywords:</h3>
+        <!-- TODO: make js build this list so that page does not need to be reloaded to see change -->
+        <ul id="keywords-list">
+            {% for keyword in keywords %}
+                <li class="keyword-listelem">{{keyword}}</li>
+            {% endfor %}
+        </ul>
     </div>
+    <script src="{{url_for('static', filename='js/index.js')}}"></script>
 </body>
 </html>
