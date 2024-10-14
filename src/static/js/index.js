@@ -1,4 +1,5 @@
 document.getElementById("keyword-form").addEventListener("submit", addKeywordCookie);
+makeKeywordsList();
 
 let cookieString = "keywords=";
 function loading() {
@@ -27,9 +28,11 @@ function makeKeywordsList() {
     let list = document.getElementById("keywords-list");
     list.innerHTML = "";
     keywords.forEach((keyword) => {
-       let elemn = document.createElement('li');
-       elemn.innerHTML = keyword;
-       list.appendChild(elemn); 
+        if (keyword != "") {
+            let elemn = document.createElement('li');
+            elemn.innerHTML = keyword;
+            list.appendChild(elemn); 
+        }
     });
 }
 

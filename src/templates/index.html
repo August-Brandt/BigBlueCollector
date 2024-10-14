@@ -25,12 +25,7 @@
             <input type="submit" id="submit" value="Add">
         </form>
         <h3>Keywords:</h3>
-        <!-- TODO: make js build this list so that page does not need to be reloaded to see change -->
-        <ul id="keywords-list">
-            {% for keyword in keywords %}
-                <li class="keyword-listelem">{{keyword}}</li>
-            {% endfor %}
-        </ul>
+        <ul id="keywords-list"></ul>
     </div>
     <script src="{{url_for('static', filename='js/index.js')}}"></script>
 </body>
