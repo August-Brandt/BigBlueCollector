@@ -22,21 +22,35 @@ function getCookie(cname) {
     return "";
 }
 
+function makeKeywordsList() {
+    let keywords = getCookie("keywords").split(",");
+    let list = document.getElementById("keywords-list");
+    list.innerHTML = "";
+    keywords.forEach((keyword) => {
+       let elemn = document.createElement('li');
+       elemn.innerHTML = keyword;
+       list.appendChild(elemn); 
+    });
+}
+
 function addKeywordCookie(event) {
     console.log(event.target.keyword);
     // event.preventDefault();
+    event.preventDefault();
     let cvalue = event.target.keyword.value;
     console.log(cvalue);
-    let prevstring = getCookie("keywords");
-    console.log("prevstring: " + prevstring);
+    let prevString = getCookie("keywords");
+    console.log("prevstring: " + prevString);
     let cookieString = ""; 
-    if (prevstring == "") {
+    if (prevString == "") {
         console.log("Adding " + cvalue + " to cookies");
         cookieString = "keywords=" + cvalue + ";"
     } else {
         console.log("Other log");
-        cookieString = "keywords=" + prevstring + "," + cvalue + ";";
+        cookieString = "keywords=" + prevString + "," + cvalue + ";";
     }
     console.log(cookieString);
     document.cookie = cookieString;
+    makeKeywordsList();
+    document.getElementById("title-keyword").value = "";
 }
