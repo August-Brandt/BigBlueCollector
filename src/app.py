@@ -16,6 +16,10 @@ def index():
     resp = make_response(render_template("index.html", keywords=keywords))
     return resp
 
+"""
+Server will collect all data from url and send all to client.
+Client will then do sorting and filtering on that data 
+"""
 @app.post('/results')
 def results():
     url = request.form['url']
