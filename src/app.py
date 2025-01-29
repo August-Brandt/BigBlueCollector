@@ -10,10 +10,10 @@ app = Flask(__name__, static_url_path="/static")
 def index():
     # if request.method == "POST":
     #     keywords.append(request.form['keyword'])
-    keywords = []
-    if request.cookies.get("keywords"):
-        keywords = request.cookies.get("keywords").split(",")
-    resp = make_response(render_template("index.html", keywords=keywords))
+    # keywords = []
+    # if request.cookies.get("keywords"):
+    #     keywords = request.cookies.get("keywords").split(",")
+    resp = make_response(render_template("index.html"))
     return resp
 
 """

@@ -23,24 +23,41 @@ function getCookie(cname) {
     return "";
 }
 
+function removeKeywordCookie(removekeyword) {
+    console.log("removing " + removekeyword);
+    let keywords = getCookie("keywords").split(",");
+    finalCookie = "keywords=";
+    keywords.forEach((keyword) =>  {
+        if (keyword != removekeyword) {
+            finalCookie += keyword + ",";
+        }
+    });
+    document.cookie = finalCookie[finalCookie.length-1] == "," ? finalCookie.slice(0, -1) + ";" : finalCookie;
+    makeKeywordsList();
+}
+
 function makeKeywordsList() {
     let keywords = getCookie("keywords").split(",");
     let list = document.getElementById("keywords-list");
     list.innerHTML = "";
     keywords.forEach((keyword) => {
         if (keyword != "") {
+            // Create the html for a keyword with remove button
             let elemn = document.createElement('li');
             let elemnWrapper = document.createElement('div');
             elemnWrapper.className = "elemnWrapper";
             let removeButton = document.createElement('button');
             removeButton.innerHTML = "X";
             removeButton.className = "removeKWbutton";
+            removeButton.onclick = function(){removeKeywordCookie(keyword)};
             elemnWrapper.appendChild(removeButton);
             let keywordElemn = document.createElement('p');
             keywordElemn.innerHTML = keyword;
             keywordElemn.className = "keywordName";
             elemnWrapper.appendChild(keywordElemn);
             elemn.appendChild(elemnWrapper);
+            
+            // Add new keyword to list on page
             list.appendChild(elemn); 
         }
     });
