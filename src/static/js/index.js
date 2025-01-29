@@ -30,7 +30,17 @@ function makeKeywordsList() {
     keywords.forEach((keyword) => {
         if (keyword != "") {
             let elemn = document.createElement('li');
-            elemn.innerHTML = keyword;
+            let elemnWrapper = document.createElement('div');
+            elemnWrapper.className = "elemnWrapper";
+            let removeButton = document.createElement('button');
+            removeButton.innerHTML = "X";
+            removeButton.className = "removeKWbutton";
+            elemnWrapper.appendChild(removeButton);
+            let keywordElemn = document.createElement('p');
+            keywordElemn.innerHTML = keyword;
+            keywordElemn.className = "keywordName";
+            elemnWrapper.appendChild(keywordElemn);
+            elemn.appendChild(elemnWrapper);
             list.appendChild(elemn); 
         }
     });

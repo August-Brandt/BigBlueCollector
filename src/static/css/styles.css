@@ -23,3 +23,30 @@ div#loading {
     display: none;
     cursor: wait;
 }
+
+#keywords-list {
+    padding-left: 20px;
+    gap: 10px;
+}
+
+li {
+    list-style-type: none;
+    margin-bottom: 7px;
+}
+
+.keywordName {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.removeKWbutton {
+    height: 1.6em;
+    width: 1.6em;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 10px;
+}
+
+.elemnWrapper {
+    display: flex;
+}

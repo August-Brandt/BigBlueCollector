@@ -24,8 +24,10 @@
             <input type="type" id="title-keyword" name="keyword">
             <input type="submit" id="submit" value="Add">
         </form>
-        <h3>Keywords:</h3>
-        <ul id="keywords-list"></ul>
+        <div id="keyword-list-wrapper">
+            <h3>Keywords:</h3>
+            <ul id="keywords-list"></ul>
+        </div>
     </div>
     <script src="{{url_for('static', filename='js/index.js')}}"></script>
 </body>
