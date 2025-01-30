@@ -70,6 +70,13 @@ function addKeywordCookie(event) {
     let cvalue = event.target.keyword.value;
     console.log(cvalue);
     let prevString = getCookie("keywords");
+    
+    // Make sure identical keywords are not added
+    if (prevString.split(",").includes(cvalue)) {
+        alert("Keyword is already in list\n\nPlease enter a new different keyword");
+        return;
+    }
+
     console.log("prevstring: " + prevString);
     let cookieString = ""; 
     if (prevString == "") {
